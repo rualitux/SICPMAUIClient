@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMauiClient2.Pages.ManageToDoPage"
+             Title="Gestion Procedimientos">
+
+
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+        <Picker
+                        Grid.Row="1"
+                        Grid.Column="0"
+             Grid.ColumnSpan="3"
+
+        x:Name="causalPicker"         
+        Title="Selecciona Causales" 
+                        TitleColor="Black"
+        FontSize="18"
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        <Picker
+            Grid.Row="2"
+            Grid.Column="0"
+             Grid.ColumnSpan="3"
+        x:Name="procedimientoPicker"         
+        Title="Selecciona Procedimientos"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        
+        <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Procedimiento:">
+                    <EntryCell Text="{Binding Path= Procedimiento.NombreReferencial}" Placeholder="Nombre Referencial"/>
+                    <EntryCell Text="{Binding Path= Procedimiento.NumeroDocumento}" Placeholder="Resolución N°"/>
+                    <EntryCell Text="{Binding Path= Procedimiento.NumeroGuia}" Placeholder="Guía de Remisión N°"/>
+                    <EntryCell Text="{Binding Path= Procedimiento.FechaDocumento}" Placeholder="Fecha Documento"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+
+        <Button Text="Guardar" Grid.Row="4" Grid.Column="0" Clicked="OnSaveButtonClicked" />
+        <Button Text="Borrar" Grid.Row="4" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
+        <Button Text="Cancelar" Grid.Row="4" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+    </Grid>
+    
+
+
+</ContentPage>
