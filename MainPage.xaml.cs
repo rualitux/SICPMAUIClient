@@ -23,5 +23,12 @@ public partial class MainPage : ContentPage
         await Shell.Current.GoToAsync(nameof(ProcedimientosPage));
 
     }
+
+    async void OnAreasClicked(object sender, EventArgs e)
+    {
+        Debug.WriteLine("!!! Boton A Areas");
+        await Shell.Current.GoToAsync(nameof(AreasPage));
+
+    }
 }
 

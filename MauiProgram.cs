@@ -19,7 +19,9 @@ public static class MauiProgram
 		builder.Services.AddHttpClient<IRestDataService, RestDataService>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<ProcedimientosPage>();
+        builder.Services.AddSingleton<AreasPage>();
         builder.Services.AddTransient<ManageToDoPage>();
-		return builder.Build();
+        builder.Services.AddTransient<ManageAreasPage>();
+        return builder.Build();
 	}
 }

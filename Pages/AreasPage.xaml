@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMauiClient2.Pages.AreasPage"
+             Title="Areas">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nueva Areas" Clicked="OnAddAreasClicked"/>
+    </ContentPage.ToolbarItems>
+    <CollectionView x:Name="collectionView"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged"
+                    Margin="30,10,30,0">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Label x:Name="NombreReferencial" FontSize="20" BackgroundColor="Khaki">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}||{0}||{1}|{2}|{3}|{4}||">
+                            <Binding Path="Id" />
+                            <Binding Path="Nombre" />
+                            <Binding Path="SedeString" />
+                            <Binding Path="DependenciaString" />
+                            <Binding Path="EstadoAreaString" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+
+</ContentPage>

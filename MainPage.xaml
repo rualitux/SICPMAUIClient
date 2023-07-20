@@ -4,7 +4,7 @@
              x:Class="ToDoMauiClient2.MainPage"
              Title="SICP">
 
-    <Grid RowDefinitions="*,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+    <Grid RowDefinitions="*,Auto,Auto,Auto,*" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
         <Label Text="Sistema Integrado Móvil de Gestión Patrimonial"
                Grid.Row="0"
                Grid.Column="0"
@@ -16,6 +16,8 @@
         <Image Source="logo_claro.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  ></Image>
         <Button Text="Gestión de Procedimientos" Grid.Row="2" Grid.Column="0"              Grid.ColumnSpan="3"
 Clicked="OnProcedimientosClicked" />
+        <Button Text="Gestión de Areas" Grid.Row="3" Grid.Column="0"              Grid.ColumnSpan="3"
+Clicked="OnAreasClicked" />
     </Grid>
 
 

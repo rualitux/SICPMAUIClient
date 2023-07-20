@@ -57,7 +57,37 @@ namespace ToDoMauiClient2.DataServices
             return;
         }
 
-    
+        public async Task AddAreaAsync(Area area)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<Area>(area, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/areas", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado area satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return;
+        }
+
+
+
         public async Task DeleteToDoAsync(int id)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
@@ -114,6 +144,35 @@ namespace ToDoMauiClient2.DataServices
         
         }
 
+        public async Task<List<Area>> GetAllAreasAsync()
+        {
+            List<Area> lista = new List<Area>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return lista;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/areas");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    lista = JsonSerializer.Deserialize<List<Area>>(content, _jsonSerializerOptions);
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return lista;
+
+        }
+
         public async Task UpdateToDoAsync(Procedimiento procedimiento)
         {
 
@@ -131,6 +190,37 @@ namespace ToDoMauiClient2.DataServices
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine($"!!!Actualizado {procedimiento.NombreReferencial}");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return;
+        }
+
+        public async Task UpdateAreaAsync(Area area)
+        {
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonProc = JsonSerializer.Serialize<Area>(area, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonProc, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.
+                    PutAsync($"{_url}/areas/{area.Id}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"!!!Actualizado {area.Nombre}");
                 }
                 else
                 {

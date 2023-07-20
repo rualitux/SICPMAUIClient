@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+x:Class="ToDoMauiClient2.Pages.ManageAreasPage"
+             Title="Gestion Areas">
+
+
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+
+
+        <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Area:">
+                    <EntryCell Text="{Binding Path= Area.Nombre}" Placeholder="Nombre Referencial"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Label Text="Selecciona Sedee::" FontSize="18" Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="{Binding Path= Area.SedeString}" Grid.Row="3" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <Label Text="{Binding Path= Area.DependenciaString}" Grid.Row="4" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+
+
+        <Label Text="Selecciona Dependencia::" FontSize="18" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+
+
+        <Picker
+                        Grid.Row="3"
+                        Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+        x:Name="sedePicker"         
+        Title="Sedes" 
+                        TitleColor="Black"
+                       
+        FontSize="18"
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        <Picker
+            Grid.Row="4"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+     
+
+        x:Name="dependenciaPicker"         
+        Title="Procedimientos"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+
+        <Button Text="Guardar" Grid.Row="6" Grid.Column="0" Clicked="OnSaveButtonClicked" />
+        <Button Text="Borrar" Grid.Row="6" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
+        <Button Text="Cancelar" Grid.Row="6" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+    </Grid>
+
+
+
+</ContentPage>

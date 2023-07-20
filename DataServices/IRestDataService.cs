@@ -11,8 +11,11 @@ namespace ToDoMauiClient2.DataServices
     {
         //Procedimientos
         Task<List<Procedimiento>> GetAllToDosAsync();
+        Task<List<Area>> GetAllAreasAsync();
         Task AddToDoAsync(Procedimiento toDo);
+        Task AddAreaAsync(Area area);
         Task UpdateToDoAsync(Procedimiento toDo);
+        Task UpdateAreaAsync(Area area);
         Task DeleteToDoAsync(int id);
         //Enumerados
         Task<List<Enumerado>> GetAllEnumeradosAsync();
