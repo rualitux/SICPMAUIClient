@@ -16,9 +16,9 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Label x:Name="NombreReferencial" FontSize="20">
+                <Label x:Name="NombreReferencial" FontSize="20" BackgroundColor="Khaki">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}||{0}|{1}|{2}|{3}|{4}|{5}||">
+                        <MultiBinding StringFormat="{}||{0}||{1}|{2}|{3}|{4}|{5}||">
                             <Binding Path="Id" />
                             <Binding Path="NombreReferencial" />
                             <Binding Path="NumeroDocumento" />

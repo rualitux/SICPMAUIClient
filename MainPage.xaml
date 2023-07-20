@@ -2,37 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoMauiClient2.MainPage"
-             Title="Procedimientos">
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Nuevo Procedimiento" Clicked="OnAddToDoClicked"/>
-        <ToolbarItem Text="A Procedimientos" Clicked="OnProcedimientosClicked"/>
+             Title="SICP">
 
-    </ContentPage.ToolbarItems>
-    <CollectionView x:Name="collectionView"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged"
-                    Margin="30,10,30,0">
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
-        </CollectionView.ItemsLayout>        
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Label x:Name="NombreReferencial" FontSize="20">
-                    <Label.Text>
-                        <MultiBinding StringFormat="{}||{0}|{1}|{2}|{3}|{4}|{5}||">
-                            <Binding Path="Id" />
-                            <Binding Path="NombreReferencial" /> 
-                            <Binding Path="NumeroDocumento" />
-                            <Binding Path="NumeroGuia" />
-                            <Binding Path="ProcedimientoTipoString" />
-                            <Binding Path="CausalString" />
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-   
+    <Grid RowDefinitions="*,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+        <Label Text="Sistema Integrado Móvil de Gestión Patrimonial"
+               Grid.Row="0"
+               Grid.Column="0"
+               ></Label>
+        <Label Text="Sistema"
+               Grid.Row="1"
+               Grid.Column="0"
+               ></Label>
+        <Image Source="logo_claro.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  ></Image>
+        <Button Text="Gestión de Procedimientos" Grid.Row="2" Grid.Column="0"              Grid.ColumnSpan="3"
+Clicked="OnProcedimientosClicked" />
+    </Grid>
+
 
 </ContentPage>

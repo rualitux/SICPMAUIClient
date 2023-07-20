@@ -79,6 +79,19 @@ namespace ToDoMauiClient2.Models
             }
         }
 
+        DateTime? _fechaRegistro;
+        public DateTime? FechaRegistro
+        {
+            get => _fechaRegistro;
+            set
+            {
+                if (_fechaRegistro == value)
+                    return;
+                _fechaRegistro = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FechaRegistro)));
+            }
+        }
+
         string? _causalString;
         public string? CausalString
         {

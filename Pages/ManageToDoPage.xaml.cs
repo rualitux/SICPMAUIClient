@@ -51,19 +51,27 @@ public partial class ManageToDoPage : ContentPage
 	{
 		//int selectedIndex = causalPicker.SelectedIndex;
 		//var causalId = Int32.Parse(causalPicker.Items[selectedIndex].ToString());        
+		if (causalPicker.SelectedItem != null)
+		{ 
 		dynamic selectedCausal = causalPicker.SelectedItem;
-        dynamic selectedProcedimientoTipo = procedimientoPicker.SelectedItem;
 		var causalId = selectedCausal.Id;
-		var procedimientoId = selectedProcedimientoTipo.Id;
         _procedimiento.CausalId = causalId;
-		_procedimiento.ProcedimientoTipoId = procedimientoId;
-            //Debug.WriteLine(causalId);       
+        }
+		if (procedimientoPicker.SelectedItem != null)
+		{
+            dynamic selectedProcedimientoTipo = procedimientoPicker.SelectedItem;
+            var procedimientoId = selectedProcedimientoTipo.Id;
+            _procedimiento.ProcedimientoTipoId = procedimientoId;
+        }
+        _procedimiento.FechaDocumento = fechaDocumentoPicker.Date;
+        //Debug.WriteLine(causalId);       
     }
     async void OnSaveButtonClicked(object sender, EventArgs e)
 	{
 		if (_isNew)
 		{
 			CausalSelected();
+			_procedimiento.FechaRegistro = DateTime.Now;
 			Debug.WriteLine("!!! Agregar nuevo procedimiento");
 			await _dataService.AddToDoAsync(Procedimiento);
 		}

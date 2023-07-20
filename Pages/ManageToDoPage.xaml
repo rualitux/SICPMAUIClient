@@ -6,15 +6,42 @@
 
 
 
-    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+      
+        
+        <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Procedimiento:">
+                    <EntryCell Text="{Binding Path= Procedimiento.NombreReferencial}" Placeholder="Nombre Referencial"/>
+                    <EntryCell Text="{Binding Path= Procedimiento.NumeroDocumento}" Placeholder="Resolución N°"/>
+                    <EntryCell Text="{Binding Path= Procedimiento.NumeroGuia}" Placeholder="Guía de Remisión N°"/>
+
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Label Text="Fecha Doc:" FontSize="18" Grid.Row="1" Grid.Column="0"></Label>
+        <Label Text="Selecciona Fecha:" FontSize="18" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+
+
+        <Label Text="{Binding Path=Procedimiento.FechaDocumento}" FontSize="18" Grid.Row="1" Grid.Column="2"></Label>
+
+        <Label Text="Selecciona Causales::" FontSize="18" Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="{Binding Path= Procedimiento.CausalString}" Grid.Row="3" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <Label Text="{Binding Path= Procedimiento.ProcedimientoTipoString}" Grid.Row="4" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+
+
+        <Label Text="Selecciona Procedimiento::" FontSize="18" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+
+
         <Picker
-                        Grid.Row="1"
-                        Grid.Column="0"
-             Grid.ColumnSpan="3"
+                        Grid.Row="3"
+                        Grid.Column="2"
+             Grid.ColumnSpan="2"
 
         x:Name="causalPicker"         
-        Title="Selecciona Causales" 
+        Title="Causales" 
                         TitleColor="Black"
+                       
         FontSize="18"
         ItemsSource="{Binding picker.ItemSource}"
         ItemDisplayBinding="{Binding Valor}"
@@ -22,11 +49,13 @@
         SelectedIndex="{Binding Id}"
         />
         <Picker
-            Grid.Row="2"
-            Grid.Column="0"
-             Grid.ColumnSpan="3"
+            Grid.Row="4"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+     
+
         x:Name="procedimientoPicker"         
-        Title="Selecciona Procedimientos"
+        Title="Procedimientos"
             TitleColor="Black"
                     FontSize="18"
 
@@ -35,21 +64,19 @@
         SelectedItem="{Binding Id}"
         SelectedIndex="{Binding Id}"
         />
-        
-        <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
-            <TableRoot>
-                <TableSection Title="Procedimiento:">
-                    <EntryCell Text="{Binding Path= Procedimiento.NombreReferencial}" Placeholder="Nombre Referencial"/>
-                    <EntryCell Text="{Binding Path= Procedimiento.NumeroDocumento}" Placeholder="Resolución N°"/>
-                    <EntryCell Text="{Binding Path= Procedimiento.NumeroGuia}" Placeholder="Guía de Remisión N°"/>
-                    <EntryCell Text="{Binding Path= Procedimiento.FechaDocumento}" Placeholder="Fecha Documento"/>
-                </TableSection>
-            </TableRoot>
-        </TableView>
+        <DatePicker           
+            x:Name="fechaDocumentoPicker"  
+            BackgroundColor="LightSteelBlue"
+            Grid.Row="2"
+            Format="d"
+            Grid.Column="2"
+            MinimumDate="01/01/2000"  
+             />
 
-        <Button Text="Guardar" Grid.Row="4" Grid.Column="0" Clicked="OnSaveButtonClicked" />
-        <Button Text="Borrar" Grid.Row="4" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
-        <Button Text="Cancelar" Grid.Row="4" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+
+        <Button Text="Guardar" Grid.Row="6" Grid.Column="0" Clicked="OnSaveButtonClicked" />
+        <Button Text="Borrar" Grid.Row="6" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
+        <Button Text="Cancelar" Grid.Row="6" Grid.Column="2" Clicked="ONCancelButtonClicked" />
     </Grid>
     
 
