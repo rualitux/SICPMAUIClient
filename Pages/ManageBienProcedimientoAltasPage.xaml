@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMauiClient2.Pages.ManageBienProcedimientoAltasPage"             
+             Title="Gestion Procedimientos"
+             >
+
+
+
+    <Grid RowDefinitions="150,50,50,50,150,50,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="0">
+        <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Alta|Procedimientos:">
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.NombreReferencial}" Placeholder="Nombre Referencial" />
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.NumeroDocumento}" Placeholder="Resolución N°"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.NumeroGuia}" Placeholder="Guía de Remisión N°"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <TableView Intent="Data" Grid.Row="4" Grid.ColumnSpan="3">
+            <TableRoot>
+                
+                <TableSection Title="Alta|Bienes:">
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.Denominacion}" Placeholder="Denominacion"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.CodigoSBN}" Placeholder="CodigoSBN°"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.Marca}" Placeholder="Marca"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.Modelo}" Placeholder="Modelo"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.Serie}" Placeholder="Serie"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.Color}" Placeholder="Color"/>
+                    <EntryCell Text="{Binding Path= BienProcedimientoAlta.Observacion}" Placeholder="Observacion"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Label Text="Selecciona Causal::" FontSize="18" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona Procedimiento::" FontSize="18" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona Fecha::" FontSize="18" Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona Categorías::" FontSize="18" Grid.Row="5" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+
+
+
+
+        <Picker
+                        Grid.Row="1"
+                        Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+        x:Name="causalPicker"         
+        Title="Causales" 
+                        TitleColor="Black"
+                       
+        FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        
+        
+        
+        
+        <Picker
+            Grid.Row="2"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+     
+
+        x:Name="procedimientoPicker"         
+        Title="Procedimientos"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+
+        <DatePicker           
+            x:Name="fechaDocumentoPicker"  
+            Grid.Row="3"
+            Format="d"
+            Grid.Column="2"
+            MinimumDate="01/01/2000"  
+             />
+
+        <Picker
+                        Grid.Row="5"
+                        Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+        x:Name="categoriaPicker"         
+        Title="Categorías" 
+                        TitleColor="Black"
+                       
+        FontSize="18"
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+
+
+        <Button Text="Guardar" Grid.Row="7" Grid.Column="0" Clicked="OnSaveButtonClicked" />
+        <Button Text="Borrar" Grid.Row="7" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
+        <Button Text="Cancelar" Grid.Row="7" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+    </Grid>
+
+
+
+</ContentPage>

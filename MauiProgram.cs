@@ -20,8 +20,13 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<ProcedimientosPage>();
         builder.Services.AddSingleton<AreasPage>();
+        builder.Services.AddSingleton<BienesPage>();
         builder.Services.AddTransient<ManageToDoPage>();
         builder.Services.AddTransient<ManageAreasPage>();
+        builder.Services.AddTransient<ManageBienesPage>();
+        builder.Services.AddTransient<ManageBienProcedimientoAltasPage>();
+
+
         return builder.Build();
 	}
 }

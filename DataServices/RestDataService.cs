@@ -86,7 +86,63 @@ namespace ToDoMauiClient2.DataServices
             return;
         }
 
+        public async Task AddBienAsync(BienPatrimonial bienPatrimonial)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<BienPatrimonial>(bienPatrimonial, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/bienes", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado bien satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return;
+        }
+
+        public async Task AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<BienProcedimientoAlta>(bienProcedimientoAlta, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/bienes/alta", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado altas satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return;
+        }
 
         public async Task DeleteToDoAsync(int id)
         {
@@ -172,6 +228,36 @@ namespace ToDoMauiClient2.DataServices
             return lista;
 
         }
+        public async Task<List<BienPatrimonial>> GetAllBienesAsync()
+        {
+            List<BienPatrimonial> lista = new List<BienPatrimonial>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return lista;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/bienes");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    lista = JsonSerializer.Deserialize<List<BienPatrimonial>>(content, _jsonSerializerOptions);
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return lista;
+
+        }
+
+
 
         public async Task UpdateToDoAsync(Procedimiento procedimiento)
         {
@@ -221,6 +307,37 @@ namespace ToDoMauiClient2.DataServices
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine($"!!!Actualizado {area.Nombre}");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return;
+        }
+
+        public async Task UpdateBienAsync(BienPatrimonial bienPatrimonial)
+        {
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonProc = JsonSerializer.Serialize<BienPatrimonial>(bienPatrimonial, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonProc, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.
+                    PutAsync($"{_url}/bienes/{bienPatrimonial.Id}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"!!!Actualizado {bienPatrimonial.Denominacion}");
                 }
                 else
                 {
