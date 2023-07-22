@@ -15,7 +15,7 @@ namespace ToDoMauiClient2.DataServices
         Task<List<BienPatrimonial>> GetAllBienesAsync();
         Task AddToDoAsync(Procedimiento toDo);
         Task AddAreaAsync(Area area);
-        Task AddBienAsync(BienPatrimonial bienPatrimonial);
+        Task<BienPatrimonial> AddBienAsync(BienPatrimonial bienPatrimonial);
         Task AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta);
         Task UpdateToDoAsync(Procedimiento toDo);
         Task UpdateAreaAsync(Area area);

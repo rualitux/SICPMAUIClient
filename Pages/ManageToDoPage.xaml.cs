@@ -88,9 +88,19 @@ public partial class ManageToDoPage : ContentPage
     }
     async void OnDeleteButtonClicked(object sender, EventArgs e)
 	{
-		await _dataService.DeleteToDoAsync(Procedimiento.Id);
-		await Shell.Current.GoToAsync("..");
-	}
+        CausalSelected();
+        _procedimiento.FechaRegistro = DateTime.Now;
+        Debug.WriteLine("!!! Agregar nuevo procedimiento");
+        await _dataService.AddToDoAsync(Procedimiento);
+		var navegationParameter = new Dictionary<string, object>
+		{
+			{nameof(BienPatrimonial), new BienPatrimonial(){
+			ProcedimientoId = _procedimiento.Id
+			} }
+        };
+        await Shell.Current.GoToAsync(nameof(ManageBienesPage), navegationParameter);
+
+    }
 	async void ONCancelButtonClicked(object sender, EventArgs e)
 	{
 		//Como subir un nivel como en cli

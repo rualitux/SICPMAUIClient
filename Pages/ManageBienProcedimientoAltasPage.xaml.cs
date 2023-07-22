@@ -92,8 +92,18 @@ public partial class ManageBienProcedimientoAltasPage : ContentPage
     }
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-       // await _dataService.DeleteToDoAsync(BienProcedimientoAlta.Id);
-        await Shell.Current.GoToAsync("..");
+        PickerOpciones();
+        Debug.WriteLine("!!! Nuevo Bien desde Alta");
+        await _dataService.AddBienProcedimientoAlta(BienProcedimientoAlta);
+        var navegationParameter = new Dictionary<string, object>
+        {
+            {nameof(BienPatrimonial), new BienPatrimonial(){
+            ProcedimientoId = _bienProcedimientoAlta.ProcedimientoId
+            } }
+        };
+        await Shell.Current.GoToAsync(nameof(ManageBienesPage), navegationParameter);
+
+
     }
     async void ONCancelButtonClicked(object sender, EventArgs e)
     {

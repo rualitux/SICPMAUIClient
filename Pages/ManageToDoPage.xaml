@@ -5,7 +5,6 @@
              Title="Gestion Procedimientos">
 
 
-
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
       
         
@@ -75,7 +74,7 @@
 
 
         <Button Text="Guardar" Grid.Row="6" Grid.Column="0" Clicked="OnSaveButtonClicked" />
-        <Button Text="Borrar" Grid.Row="6" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
+        <Button Text="Guardar+Alta" Grid.Row="6" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
         <Button Text="Cancelar" Grid.Row="6" Grid.Column="2" Clicked="ONCancelButtonClicked" />
     </Grid>
     

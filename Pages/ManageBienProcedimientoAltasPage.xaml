@@ -102,7 +102,7 @@
 
 
         <Button Text="Guardar" Grid.Row="7" Grid.Column="0" Clicked="OnSaveButtonClicked" />
-        <Button Text="Borrar" Grid.Row="7" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
+        <Button Text="SiguienteBien" Grid.Row="7" Grid.Column="1" Clicked="OnDeleteButtonClicked" />
         <Button Text="Cancelar" Grid.Row="7" Grid.Column="2" Clicked="ONCancelButtonClicked" />
     </Grid>
 

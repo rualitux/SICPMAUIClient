@@ -40,6 +40,7 @@ public partial class ManageBienesPage : ContentPage
 		InitializeComponent();
 		_dataService=dataService;
         BindingContext = this;
+    
     }
 
     void PickerOpciones()
@@ -72,20 +73,71 @@ public partial class ManageBienesPage : ContentPage
             Debug.WriteLine("!!! Actualizar nuevo procedimiento");
             await _dataService.UpdateBienAsync(BienPatrimonial);
         }
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync(nameof(BienesPage));
 
     }
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        //await _dataService.DeleteToDoAsync(BienPatrimonial.Id);
-        await Shell.Current.GoToAsync("..");
+        PickerOpciones();
+        Debug.WriteLine("!!! Nuevo Bien desde Alta");
+        //Postea y recibe del Api el bien posteado
+        var bienPosteado = await _dataService.AddBienAsync(BienPatrimonial);
+        //crea un bien nuevo a partir de bienPosteado con la información que se desea mantener
+        //en la siguiente alta
+        var bienNavigation = BienNavigation(bienPosteado);
+        
+        var navegationParameter = new Dictionary<string, object>
+        {
+            {nameof(BienPatrimonial), bienNavigation }
+        };
+        await Shell.Current.GoToAsync(nameof(ManageBienesPage), navegationParameter);
+
+
     }
     async void ONCancelButtonClicked(object sender, EventArgs e)
     {
         //Como subir un nivel como en cli
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync(nameof(BienesPage));
     }
 
+
+    public BienPatrimonial BienNavigation(BienPatrimonial bienPosteado)
+    {
+        var bienNavigation = new BienPatrimonial();
+        if (checkProce.IsChecked)
+        {
+            bienNavigation.ProcedimientoId = bienPosteado.ProcedimientoId;
+        }
+        if (checkCategoria.IsChecked)
+        {
+            bienNavigation.CategoriaId = bienPosteado.CategoriaId;
+        }
+        if (checkDenominacion.IsChecked)
+        {
+            bienNavigation.Denominacion = bienPosteado.Denominacion;
+        }
+        if (checkMarca.IsChecked)
+        {
+            bienNavigation.Marca = bienPosteado.Marca;
+        }
+        if (checkModelo.IsChecked)
+        {
+            bienNavigation.Modelo = bienPosteado.Modelo;
+        }
+        if (checkSerie.IsChecked)
+        {
+            bienNavigation.Serie = bienPosteado.Serie;
+        }
+        if (checkColor.IsChecked)
+        {
+            bienNavigation.Color = bienPosteado.Color;
+        }
+        if (checkObservacion.IsChecked)
+        {
+            bienNavigation.Observacion = bienPosteado.Observacion;
+        }
+        return bienNavigation;
+    }
 
 
     bool IsNew(BienPatrimonial bienPatrimonial)
@@ -96,6 +148,8 @@ public partial class ManageBienesPage : ContentPage
         }
         return false;
     }
+
+ 
 
 
 

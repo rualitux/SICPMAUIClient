@@ -86,12 +86,12 @@ namespace ToDoMauiClient2.DataServices
             return;
         }
 
-        public async Task AddBienAsync(BienPatrimonial bienPatrimonial)
+        public async Task<BienPatrimonial> AddBienAsync(BienPatrimonial bienPatrimonial)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("!!! Sin internet");
-                return;
+                return null;
             }
             try
             {
@@ -107,12 +107,17 @@ namespace ToDoMauiClient2.DataServices
                     Debug.WriteLine("!!! Sin respuesta Http 2xx");
 
                 }
+                //leo la respuesta 201
+                var respuestaPost = await response.Content.ReadAsStringAsync();
+                //convierto a BienPatrimonial con todas las IDs puestas por el API
+                var bienPosteado = JsonSerializer.Deserialize<BienPatrimonial>(respuestaPost, _jsonSerializerOptions);
+                return bienPosteado;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message} ");
             }
-            return;
+            return null;
         }
 
         public async Task AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta)
