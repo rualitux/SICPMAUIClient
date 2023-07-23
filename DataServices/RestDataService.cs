@@ -120,12 +120,47 @@ namespace ToDoMauiClient2.DataServices
             return null;
         }
 
-        public async Task AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta)
+        public async Task<Inventario> AddInventarioAsync(Inventario inventario)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("!!! Sin internet");
-                return;
+                return null;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<Inventario>(inventario, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/inventarios", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado inventario satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+                //leo la respuesta 201
+                var respuestaPost = await response.Content.ReadAsStringAsync();
+                //convierto a BienPatrimonial con todas las IDs puestas por el API
+                var inventarioPosteado = JsonSerializer.Deserialize<Inventario>(respuestaPost, _jsonSerializerOptions);
+                return inventarioPosteado;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return null;
+        }
+
+
+        public async Task<BienProcedimientoAltaRetorno> AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return null;
             }
             try
             {
@@ -141,12 +176,17 @@ namespace ToDoMauiClient2.DataServices
                     Debug.WriteLine("!!! Sin respuesta Http 2xx");
 
                 }
+                var respuestaPost = await response.Content.ReadAsStringAsync();
+                //convierto a BienPatrimonial con todas las IDs puestas por el API
+                var bienPosteado = JsonSerializer.Deserialize<BienProcedimientoAltaRetorno>(respuestaPost, _jsonSerializerOptions);
+                return bienPosteado;
+
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message} ");
             }
-            return;
+            return null;
         }
 
         public async Task DeleteToDoAsync(int id)
@@ -262,6 +302,36 @@ namespace ToDoMauiClient2.DataServices
 
         }
 
+        public async Task<List<Inventario>> GetAllInventariosAsync()
+        {
+            List<Inventario> lista = new List<Inventario>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return lista;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/inventarios");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    lista = JsonSerializer.Deserialize<List<Inventario>>(content, _jsonSerializerOptions);
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return lista;
+
+        }
+
+
 
 
         public async Task UpdateToDoAsync(Procedimiento procedimiento)
@@ -343,6 +413,37 @@ namespace ToDoMauiClient2.DataServices
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine($"!!!Actualizado {bienPatrimonial.Denominacion}");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return;
+        }
+
+        public async Task UpdateInventarioAsync(Inventario inventario)
+        {
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonProc = JsonSerializer.Serialize<Inventario>(inventario, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonProc, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.
+                    PutAsync($"{_url}/inventarios/{inventario.Id}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"!!!Actualizado {inventario.BienPatrimonialId} en {inventario.AreaId}");
                 }
                 else
                 {

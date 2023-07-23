@@ -153,18 +153,18 @@ namespace ToDoMauiClient2.Models
             }
         }
 
-        string? _procedimientoString;
-        public string? ProcedimientoString
-        {
-            get => _procedimientoString;
-            set
-            {
-                if (_procedimientoString == value)
-                    return;
-                _procedimientoString = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcedimientoString)));
-            }
-        }
+        //string? _procedimientoString;
+        //public string? ProcedimientoString
+        //{
+        //    get => _procedimientoString;
+        //    set
+        //    {
+        //        if (_procedimientoString == value)
+        //            return;
+        //        _procedimientoString = value;
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcedimientoString)));
+        //    }
+        //}
 
 
 

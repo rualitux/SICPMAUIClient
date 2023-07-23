@@ -93,15 +93,24 @@ public partial class ManageBienProcedimientoAltasPage : ContentPage
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
         PickerOpciones();
-        Debug.WriteLine("!!! Nuevo Bien desde Alta");
-        await _dataService.AddBienProcedimientoAlta(BienProcedimientoAlta);
+        Debug.WriteLine("!!! Nuevo Inventario desde Alta");
+        //Postea y recibe del Api el bien posteado
+        var bienProcData = await _dataService.AddBienProcedimientoAlta(BienProcedimientoAlta);
+        //crea un bien nuevo a partir de bienPosteado con la información que se desea mantener
+        //en la siguiente alta
+        var inventarioNavigation = new Inventario()
+        {
+            BienPatrimonialId = bienProcData.BienId,
+            BienPatrimonialString = bienProcData.BienString,
+            ProcedimientoId = bienProcData.ProcedimientoId,
+            ProcedimientoString = bienProcData.ProcedimientoString
+        };
         var navegationParameter = new Dictionary<string, object>
         {
-            {nameof(BienPatrimonial), new BienPatrimonial(){
-            ProcedimientoId = _bienProcedimientoAlta.ProcedimientoId
-            } }
+            {nameof(Inventario), inventarioNavigation }
         };
-        await Shell.Current.GoToAsync(nameof(ManageBienesPage), navegationParameter);
+        await Shell.Current.GoToAsync(nameof(ManageInventariosPage), navegationParameter);
+
 
 
     }

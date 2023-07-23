@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMauiClient2.Pages.ManageInventariosPage"
+             Title="Gestion Bienes">
+
+
+
+    <Grid RowDefinitions="90,40,40,40,40,40,40,40,40,*" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+
+
+        <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Bien Patrimonial:">
+                    <EntryCell Text="{Binding Path= Inventario.Cantidad}" Placeholder="Cantidad"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Label Text="Selecciona bien::" FontSize="18" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona area::" FontSize="18" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona procedimiento::" FontSize="18" Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona anexo::" FontSize="18" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Selecciona condición::" FontSize="18" Grid.Row="5" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="{Binding Path= Inventario.BienPatrimonialString}" Grid.Row="1" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <Label Text="{Binding Path= Inventario.AreaString}" Grid.Row="2" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <Label Text="{Binding Path= Inventario.ProcedimientoString}" Grid.Row="3" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <Label Text="{Binding Path= Inventario.AnexoTipoString}" Grid.Row="4" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <Label Text="{Binding Path= Inventario.EstadoCondicionString}" Grid.Row="5" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+
+
+        <Picker
+                        Grid.Row="1"
+                        Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+        x:Name="bienPicker"         
+        Title="Bienes" 
+                        TitleColor="Black"
+                       
+        FontSize="18"
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Denominacion}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        <Picker
+            Grid.Row="2"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+
+        x:Name="areaPicker"         
+        Title="Areas"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Nombre}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        <Picker
+            Grid.Row="3"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+     
+        x:Name="procedimientoPicker"         
+        Title="Procedimientos"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding NombreReferencial}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+
+        <Picker
+            Grid.Row="4"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+
+        x:Name="anexoPicker"         
+        Title="Anexos"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+
+        <Picker
+            Grid.Row="5"
+            Grid.Column="2"
+             Grid.ColumnSpan="2"
+     
+
+        x:Name="condicionPicker"         
+        Title="Condiciones"
+            TitleColor="Black"
+                    FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+        
+
+
+        <Label Text="Valores a repetir en el siguiente Bien:" FontSize="18" Grid.Row="6" Grid.Column="0"  Grid.ColumnSpan="3" ></Label>
+
+        <Label Text="Bien" FontSize="18" Grid.Row="7" Grid.Column="0"  Grid.ColumnSpan="2" BackgroundColor="Salmon"></Label>
+        <Label Text="Area" FontSize="18" Grid.Row="7" Grid.Column="1"  Grid.ColumnSpan="2"></Label>
+        <Label Text="Procedimiento" FontSize="18" Grid.Row="7" Grid.Column="2"  Grid.ColumnSpan="2" BackgroundColor="LimeGreen"></Label>
+        <Label Text="Anexo" FontSize="18" Grid.Row="8" Grid.Column="0"  Grid.ColumnSpan="3"  BackgroundColor="LimeGreen" ></Label>
+        <Label Text="Condicion" FontSize="18" Grid.Row="8" Grid.Column="1"  Grid.ColumnSpan="2"></Label>
+        <CheckBox x:Name="checkBien" Grid.Row="7" Grid.Column="0" />
+        <CheckBox x:Name="checkArea" Grid.Row="7" Grid.Column="1" />
+        <CheckBox x:Name="checkProcedimiento" Grid.Row="7" Grid.Column="2" />
+        <CheckBox x:Name="checkAnexo" Grid.Row="8" Grid.Column="0" />
+        <CheckBox x:Name="checkCondicion" Grid.Row="8" Grid.Column="1" />
+        <Button Text="Guardar y Finalizar" Grid.Row="9" Grid.Column="0" Clicked="OnSaveButtonClicked" LineBreakMode="WordWrap" />
+        <Button Text="Guardar y Agregar" Grid.Row="9" Grid.Column="1" Clicked="OnDeleteButtonClicked" LineBreakMode="WordWrap" />
+        <Button Text="Cancelar" Grid.Row="9" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+    </Grid>
+
+
+
+</ContentPage>

@@ -36,5 +36,11 @@ public partial class MainPage : ContentPage
         Debug.WriteLine("!!! Boton A Bienes");
         await Shell.Current.GoToAsync(nameof(BienesPage));
     }
+
+    async void OnInventariosClicked(object sender, EventArgs e)
+    {
+        Debug.WriteLine("!!! Boton A Inventarios");
+        await Shell.Current.GoToAsync(nameof(InventariosPage));
+    }
 }
 

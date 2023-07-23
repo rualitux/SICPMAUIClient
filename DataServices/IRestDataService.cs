@@ -13,13 +13,16 @@ namespace ToDoMauiClient2.DataServices
         Task<List<Procedimiento>> GetAllToDosAsync();
         Task<List<Area>> GetAllAreasAsync();
         Task<List<BienPatrimonial>> GetAllBienesAsync();
+        Task<List<Inventario>> GetAllInventariosAsync();
         Task AddToDoAsync(Procedimiento toDo);
         Task AddAreaAsync(Area area);
         Task<BienPatrimonial> AddBienAsync(BienPatrimonial bienPatrimonial);
-        Task AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta);
+        Task<Inventario> AddInventarioAsync(Inventario inventario);
+        Task<BienProcedimientoAltaRetorno> AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta);
         Task UpdateToDoAsync(Procedimiento toDo);
         Task UpdateAreaAsync(Area area);
         Task UpdateBienAsync(BienPatrimonial bienPatrimonial);
+        Task UpdateInventarioAsync(Inventario inventario);
         Task DeleteToDoAsync(int id);
         //Enumerados
         Task<List<Enumerado>> GetAllEnumeradosAsync();
