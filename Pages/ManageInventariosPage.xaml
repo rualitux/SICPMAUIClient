@@ -35,6 +35,7 @@
 
         x:Name="bienPicker"         
         Title="Bienes" 
+            IsVisible="False"
                         TitleColor="Black"
                        
         FontSize="18"
@@ -53,6 +54,7 @@
         Title="Areas"
             TitleColor="Black"
                     FontSize="18"
+            IsVisible="False"
 
         ItemsSource="{Binding picker.ItemSource}"
         ItemDisplayBinding="{Binding Nombre}"
@@ -68,6 +70,7 @@
         Title="Procedimientos"
             TitleColor="Black"
                     FontSize="18"
+            IsVisible="False"
 
         ItemsSource="{Binding picker.ItemSource}"
         ItemDisplayBinding="{Binding NombreReferencial}"

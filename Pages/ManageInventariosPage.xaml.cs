@@ -33,49 +33,67 @@ public partial class ManageInventariosPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-     
-            var allProcedimientos = await _dataService.GetAllToDosAsync();
-            procedimientoPicker.ItemsSource = allProcedimientos.ToList();
-       
-            var allBienes = await _dataService.GetAllBienesAsync();
-            bienPicker.ItemsSource = allBienes.ToList();
-       
-            var allAreas = await _dataService.GetAllAreasAsync();
-            areaPicker.ItemsSource = allAreas.ToList();
 
-        
+        if (_isNew)
+        {
+            if (Inventario.ProcedimientoId == null)
+            {
+                var allProcedimientos = await _dataService.GetAllToDosAsync();
+                procedimientoPicker.IsVisible = true;
+                procedimientoPicker.ItemsSource = allProcedimientos.ToList();
+
+            }
+
+            if (Inventario.BienPatrimonialId == null)
+            {
+                var allBienes = await _dataService.GetAllBienesAsync();
+                bienPicker.IsVisible = true;
+                bienPicker.ItemsSource = allBienes.ToList();
+            }
+
+
+            if (Inventario.AreaId == null)
+            {
+                var allAreas = await _dataService.GetAllAreasAsync();
+                areaPicker.IsVisible = true;
+                areaPicker.ItemsSource = allAreas.ToList();
+            }
+        }
         var allEnumerados = await _dataService.GetAllEnumeradosAsync();
-            
-                var anexos = allEnumerados.Where(p => p.Padre == 17);
-                anexoPicker.ItemsSource = anexos.ToList();
-           
-                var condiciones = allEnumerados.Where(p => p.Padre == 18);
-                condicionPicker.ItemsSource = condiciones.ToList();
-         
-        
-        
+
+        var anexos = allEnumerados.Where(p => p.Padre == 17);
+        anexoPicker.ItemsSource = anexos.ToList();
+
+        var condiciones = allEnumerados.Where(p => p.Padre == 18);
+        condicionPicker.ItemsSource = condiciones.ToList();
     }
 
-    void PickerOpciones()
+    void PickerOpcionesNuevo()
     {
-        if (bienPicker.SelectedItem != null)
+        if (bienPicker.IsVisible && bienPicker.SelectedItem != null)
         {
             dynamic selectedBien = bienPicker.SelectedItem;
             var bienId = selectedBien.Id;
             _inventario.BienPatrimonialId = bienId;
         }
-        if (procedimientoPicker.SelectedItem != null)
+        if (procedimientoPicker.IsVisible && procedimientoPicker.SelectedItem != null)
         {
             dynamic selectedProcedimiento = procedimientoPicker.SelectedItem;
             var procedimientoId = selectedProcedimiento.Id;
             _inventario.ProcedimientoId = procedimientoId;
         }
-        if (areaPicker.SelectedItem != null)
+        if (areaPicker.IsVisible && areaPicker.SelectedItem != null)
         {
             dynamic selectedArea = areaPicker.SelectedItem;
             var areaId = selectedArea.Id;
             _inventario.AreaId = areaId;
         }
+
+    }
+
+    void PickerOpciones()
+    {
+      
         if (anexoPicker.SelectedItem != null)
         {
             dynamic selectedAnexo = anexoPicker.SelectedItem;
@@ -94,6 +112,7 @@ public partial class ManageInventariosPage : ContentPage
     {
         if (_isNew)
         {
+            PickerOpcionesNuevo();
             PickerOpciones();
             Debug.WriteLine("!!! Agregar nuevo inventario");
             await _dataService.AddInventarioAsync(Inventario);
@@ -108,7 +127,8 @@ public partial class ManageInventariosPage : ContentPage
 
     }
     async void OnDeleteButtonClicked(object sender, EventArgs e)
-    {
+    {       
+        PickerOpcionesNuevo();
         PickerOpciones();
         Debug.WriteLine("!!! Nuevo Inventario desde Alta");
         //Postea y recibe del Api el bien posteado
@@ -167,15 +187,6 @@ public partial class ManageInventariosPage : ContentPage
         }
         return inventarioNavigation;
     }
-
-
-
-
-
-
-
-
-
 
     bool IsNew(Inventario inventario)
     {
