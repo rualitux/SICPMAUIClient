@@ -27,12 +27,17 @@ public partial class ManageBienesPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
+
+        if (_isNew)
+        {
+            GuardarMultipleButton.IsVisible = true;
+        }
         var allEnumerados = await _dataService.GetAllEnumeradosAsync();
-        var allProcedimientos = await _dataService.GetAllToDosAsync();
+        //var allProcedimientos = await _dataService.GetAllToDosAsync();
         var categorias = allEnumerados.Where(p => p.Padre == 11);
         //var procedimientos = allProcedimientos.Where(p => p.ProcedimientoTipoId == 10);
         categoriaPicker.ItemsSource = categorias.ToList();
-        procedimientoPicker.ItemsSource = allProcedimientos.ToList();
+        //procedimientoPicker.ItemsSource = allProcedimientos.ToList();
     }
 
     public ManageBienesPage(IRestDataService dataService)
@@ -51,12 +56,12 @@ public partial class ManageBienesPage : ContentPage
             var categoriaId = selectedCategoria.Id;
             _bienPatrimonial.CategoriaId = categoriaId;
         }
-        if (procedimientoPicker.SelectedItem != null)
-        {
-            dynamic selectedProcedimiento = procedimientoPicker.SelectedItem;
-            var procedimientoId = selectedProcedimiento.Id;
-            _bienPatrimonial.ProcedimientoId = procedimientoId;
-        }        
+        //if (procedimientoPicker.SelectedItem != null)
+        //{
+        //    dynamic selectedProcedimiento = procedimientoPicker.SelectedItem;
+        //    var procedimientoId = selectedProcedimiento.Id;
+        //    _bienPatrimonial.ProcedimientoId = procedimientoId;
+        //}        
     }
 
     async void OnSaveButtonClicked(object sender, EventArgs e)
@@ -64,13 +69,13 @@ public partial class ManageBienesPage : ContentPage
         if (_isNew)
         {
             PickerOpciones();
-            Debug.WriteLine("!!! Agregar nuevo procedimiento");
+            Debug.WriteLine("!!! Agregar nuevo bien");
             await _dataService.AddBienAsync(BienPatrimonial);
         }
         else
         {
             PickerOpciones();
-            Debug.WriteLine("!!! Actualizar nuevo procedimiento");
+            Debug.WriteLine("!!! Actualizar nuevo bien");
             await _dataService.UpdateBienAsync(BienPatrimonial);
         }
         await Shell.Current.GoToAsync(nameof(BienesPage));
@@ -96,7 +101,6 @@ public partial class ManageBienesPage : ContentPage
     }
     async void ONCancelButtonClicked(object sender, EventArgs e)
     {
-        //Como subir un nivel como en cli
         await Shell.Current.GoToAsync(nameof(BienesPage));
     }
 
@@ -104,10 +108,10 @@ public partial class ManageBienesPage : ContentPage
     public BienPatrimonial BienNavigation(BienPatrimonial bienPosteado)
     {
         var bienNavigation = new BienPatrimonial();
-        if (checkProce.IsChecked)
-        {
-            bienNavigation.ProcedimientoId = bienPosteado.ProcedimientoId;
-        }
+        //if (checkProce.IsChecked)
+        //{
+        //    bienNavigation.ProcedimientoId = bienPosteado.ProcedimientoId;
+        //}
         if (checkCategoria.IsChecked)
         {
             bienNavigation.CategoriaId = bienPosteado.CategoriaId;

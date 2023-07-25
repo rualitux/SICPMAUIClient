@@ -54,4 +54,10 @@ public partial class InventariosPage : ContentPage
 
     }
 
+    async void OnMenuPrincipalClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.Navigation.PopToRootAsync();
+    }
+
+
 }

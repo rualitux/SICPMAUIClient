@@ -24,10 +24,10 @@
         </TableView>
         <Label Text="Selecciona Categoría::" FontSize="18" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
         <Label Text="{Binding Path= BienPatrimonial.CategoriaString}" Grid.Row="1" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
-        <Label Text="{Binding Path= BienPatrimonial.ProcedimientoString}" Grid.Row="2" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>
+        <!--<Label Text="{Binding Path= BienPatrimonial.ProcedimientoString}" Grid.Row="2" Grid.Column="2" BackgroundColor="LightSteelBlue"></Label>-->
 
 
-        <Label Text="Selecciona Procedimiento::" FontSize="18" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <!--<Label Text="Selecciona Procedimiento::" FontSize="18" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></Label>-->
 
 
         <Picker
@@ -45,7 +45,7 @@
         SelectedItem="{Binding Id}"
         SelectedIndex="{Binding Id}"
         />
-        <Picker
+        <!--<Picker
             Grid.Row="2"
             Grid.Column="2"
              Grid.ColumnSpan="2"
@@ -60,10 +60,10 @@
         ItemDisplayBinding="{Binding NombreReferencial}"
         SelectedItem="{Binding Id}"
         SelectedIndex="{Binding Id}"
-        />
+        />-->
         <Label Text="Valores a repetir en el siguiente Bien:" FontSize="18" Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" ></Label>
 
-        <Label Text="Procedimiento" FontSize="18" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" BackgroundColor="Salmon"></Label>
+        <!--<Label Text="Procedimiento" FontSize="18" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" BackgroundColor="Salmon"></Label>-->
         <Label Text="Categoria" FontSize="18" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"></Label>
         <Label Text="Denominacion" FontSize="18" Grid.Row="4" Grid.Column="2"  Grid.ColumnSpan="2" BackgroundColor="LimeGreen"></Label>
         <Label Text="Marca" FontSize="18" Grid.Row="5" Grid.Column="0"  Grid.ColumnSpan="3"  BackgroundColor="LimeGreen" ></Label>
@@ -71,7 +71,7 @@
         <Label Text="Serie" FontSize="18" Grid.Row="5" Grid.Column="2"  Grid.ColumnSpan="2"></Label>
         <Label Text="Color" FontSize="18" Grid.Row="6" Grid.Column="0"  Grid.ColumnSpan="2" BackgroundColor="LimeGreen"></Label>
         <Label Text="Observacion" FontSize="18" Grid.Row="6" Grid.Column="1"  Grid.ColumnSpan="2"></Label>
-        <CheckBox x:Name="checkProce" Grid.Row="4" Grid.Column="0" />
+        <!--<CheckBox x:Name="checkProce" Grid.Row="4" Grid.Column="0" />-->
         <CheckBox x:Name="checkCategoria" Grid.Row="4" Grid.Column="1" />
         <CheckBox x:Name="checkDenominacion" Grid.Row="4" Grid.Column="2" />
         <CheckBox x:Name="checkMarca" Grid.Row="5" Grid.Column="0" />
@@ -83,7 +83,7 @@
 
 
         <Button Text="Guardar y Finalizar" Grid.Row="7" Grid.Column="0" Clicked="OnSaveButtonClicked" LineBreakMode="WordWrap" />
-        <Button Text="Guardar y Agregar" Grid.Row="7" Grid.Column="1" Clicked="OnDeleteButtonClicked" LineBreakMode="WordWrap" />
+        <Button x:Name="GuardarMultipleButton"  Text="Guardar y seguir agregando" Grid.Row="7" Grid.Column="1" Clicked="OnDeleteButtonClicked" LineBreakMode="WordWrap" IsVisible="False" />
         <Button Text="Cancelar" Grid.Row="7" Grid.Column="2" Clicked="ONCancelButtonClicked" />
     </Grid>
 

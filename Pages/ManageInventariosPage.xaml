@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="ToDoMauiClient2.Pages.ManageInventariosPage"
              Title="Gestion Bienes">
 
 
 
-    <Grid RowDefinitions="90,40,40,40,40,40,40,40,40,*" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
+    <Grid RowDefinitions="110,40,40,40,40,40,40,40,40,*,*" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="10">
 
 
         <TableView Intent="Data" Grid.Row="0" Grid.ColumnSpan="3">
             <TableRoot>
-                <TableSection Title="Bien Patrimonial:">
+                <TableSection Title="Cantidad:">
                     <EntryCell Text="{Binding Path= Inventario.Cantidad}" Placeholder="Cantidad"/>
                 </TableSection>
             </TableRoot>
@@ -126,9 +127,10 @@
         <CheckBox x:Name="checkProcedimiento" Grid.Row="7" Grid.Column="2" />
         <CheckBox x:Name="checkAnexo" Grid.Row="8" Grid.Column="0" />
         <CheckBox x:Name="checkCondicion" Grid.Row="8" Grid.Column="1" />
-        <Button Text="Guardar y Finalizar" Grid.Row="9" Grid.Column="0" Clicked="OnSaveButtonClicked" LineBreakMode="WordWrap" />
-        <Button Text="Guardar y Agregar" Grid.Row="9" Grid.Column="1" Clicked="OnDeleteButtonClicked" LineBreakMode="WordWrap" />
-        <Button Text="Cancelar" Grid.Row="9" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+        <Button x:Name="BajaButton" IsVisible="False" Text="Dar de baja" Grid.Row="9" Grid.Column="0" Clicked="OnBajaButtonClicked" LineBreakMode="WordWrap"  />
+        <Button Text="Guardar y Finalizar" Grid.Row="10" Grid.Column="0" Clicked="OnSaveButtonClicked" LineBreakMode="WordWrap" />
+        <Button x:Name="GuardarMultipleButton" IsVisible="False" Text="Guardar y Agregar" Grid.Row="10" Grid.Column="1" Clicked="OnDeleteButtonClicked" LineBreakMode="WordWrap"  />
+        <Button Text="Cancelar" Grid.Row="10" Grid.Column="2" Clicked="ONCancelButtonClicked" />
     </Grid>
 
 

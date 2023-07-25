@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ToDoMauiClient2.Models;
 
@@ -24,7 +25,9 @@ namespace ToDoMauiClient2.DataServices
             _url = $"{_baseAddress}/api/i";
             _jsonSerializerOptions = new JsonSerializerOptions
             { 
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
             };
         }
 
@@ -154,6 +157,73 @@ namespace ToDoMauiClient2.DataServices
             return null;
         }
 
+          public async Task<Ajuste> AddAjusteAsync(Ajuste ajuste)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return null;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<Ajuste>(ajuste, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/ajustes", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado ajuste satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+                //leo la respuesta 201
+                var respuestaPost = await response.Content.ReadAsStringAsync();
+                //convierto a Ajuste con todas las IDs puestas por el API
+                var ajustePosteado = JsonSerializer.Deserialize<Ajuste>(respuestaPost, _jsonSerializerOptions);
+                return ajustePosteado;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return null;
+        }
+
+        public async Task<AjusteDetalle> AddAjusteDetalleAsync(AjusteDetalle ajusteDetalle)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return null;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<AjusteDetalle>(ajusteDetalle, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/ajustes/detalles", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado ajuste satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+                //leo la respuesta 201
+                var respuestaPost = await response.Content.ReadAsStringAsync();
+                //convierto a Ajuste con todas las IDs puestas por el API
+                var ajusteDetallePosteado = JsonSerializer.Deserialize<AjusteDetalle>(respuestaPost, _jsonSerializerOptions);
+                return ajusteDetallePosteado;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return null;
+        }
 
         public async Task<BienProcedimientoAltaRetorno> AddBienProcedimientoAlta(BienProcedimientoAlta bienProcedimientoAlta)
         {
@@ -188,6 +258,38 @@ namespace ToDoMauiClient2.DataServices
             }
             return null;
         }
+
+        public async Task AddAjusteBaja(AjusteBajaVM ajusteBajaVM) {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return;
+            }
+            try
+            {
+                string jsonContent = JsonSerializer.Serialize<AjusteBajaVM>(ajusteBajaVM, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/inventarios/baja", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("!!! Creado altas satisfactoriamente");
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+
+                }
+                return;
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+
+        }
+
+
 
         public async Task DeleteToDoAsync(int id)
         {
@@ -330,6 +432,75 @@ namespace ToDoMauiClient2.DataServices
             return lista;
 
         }
+
+        public async Task<List<AjustoExtendidoDto>> GetAllAjustesAsync()
+        {
+            List<AjustoExtendidoDto> lista = new List<AjustoExtendidoDto>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return lista;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/ajustes/extendido");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    lista = JsonSerializer.Deserialize<List<AjustoExtendidoDto>>(content, _jsonSerializerOptions);
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return lista;
+
+        }
+
+
+
+
+        public async Task<AjusteBajaVM> GetInventarioAsync(int inventarioId)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("!!! Sin internet");
+                return null;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.
+                          GetAsync($"{_url}/inventarios/{inventarioId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    var item = JsonSerializer.Deserialize<Inventario>(content, _jsonSerializerOptions);
+                    var ajusteBajaVM = new AjusteBajaVM();
+                    ajusteBajaVM.InventarioId = item.Id;
+                    ajusteBajaVM.Cantidad = item.Cantidad;
+                    ajusteBajaVM.AnexoTipoId = item.AnexoTipoId;
+                    ajusteBajaVM.AreaId = item.AreaId;
+                    ajusteBajaVM.BienPatrimonialId = item.BienPatrimonialId;
+                    ajusteBajaVM.EstadoCondicionId = item.EstadoCondicionId;
+                    return ajusteBajaVM;
+                }
+                else
+                {
+                    Debug.WriteLine("!!! Sin respuesta Http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message} ");
+            }
+            return null;
+        }
+
 
 
 

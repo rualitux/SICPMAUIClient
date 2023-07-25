@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
 using System.Diagnostics;
 using ToDoMauiClient2.DataServices;
 using ToDoMauiClient2.Models;
@@ -11,7 +13,7 @@ public partial class ManageInventariosPage : ContentPage
     private readonly IRestDataService _dataService;
     Inventario _inventario;
     bool _isNew;
-
+    int _inventarioCantidadOriginal;
     public Inventario Inventario
     {
         get => _inventario;
@@ -58,6 +60,15 @@ public partial class ManageInventariosPage : ContentPage
                 areaPicker.IsVisible = true;
                 areaPicker.ItemsSource = allAreas.ToList();
             }
+            GuardarMultipleButton.IsVisible = true;
+        }
+        else
+        {
+            BajaButton.IsVisible = true;
+        }
+        if (Inventario.Cantidad != null)
+        {
+            _inventarioCantidadOriginal= Inventario.Cantidad.Value;
         }
         var allEnumerados = await _dataService.GetAllEnumeradosAsync();
 
@@ -116,14 +127,35 @@ public partial class ManageInventariosPage : ContentPage
             PickerOpciones();
             Debug.WriteLine("!!! Agregar nuevo inventario");
             await _dataService.AddInventarioAsync(Inventario);
+            var toast=  Toast.Make("Inventario agregado.");
+            await toast.Show();
+            await Shell.Current.GoToAsync(nameof(InventariosPage));
+
         }
         else
         {
-            PickerOpciones();
-            Debug.WriteLine("!!! Actualizar nuevo inventario");
-            await _dataService.UpdateInventarioAsync(Inventario);
+            if (_inventario.Cantidad.Value != _inventarioCantidadOriginal)
+            {
+                var justificacion = await this.ShowPopupAsync(new JustificacionPopup());
+
+                var stringparaquenomoleste = (string)justificacion;
+                if (justificacion != null)
+                {
+                    AjusteCantidad(_inventario.Cantidad.Value, _inventarioCantidadOriginal, stringparaquenomoleste);
+                    PickerOpciones();
+                    Debug.WriteLine("!!! Actualizar nuevo inventario");
+                    await _dataService.UpdateInventarioAsync(Inventario);
+                    var toast = Toast.Make("Inventario modificado.");
+                    await toast.Show();
+                    await Shell.Current.GoToAsync(nameof(InventariosPage));
+                }
+                else
+                {
+                    _inventario.Cantidad = _inventarioCantidadOriginal;
+                }
+            }
+           
         }
-        await Shell.Current.GoToAsync(nameof(InventariosPage));
 
     }
     async void OnDeleteButtonClicked(object sender, EventArgs e)
@@ -133,6 +165,8 @@ public partial class ManageInventariosPage : ContentPage
         Debug.WriteLine("!!! Nuevo Inventario desde Alta");
         //Postea y recibe del Api el bien posteado
         var inventarioPosteado = await _dataService.AddInventarioAsync(Inventario);
+        var toast = Toast.Make("Inventario agregado.");
+        await toast.Show();
         //crea un bien nuevo a partir de bienPosteado con la información que se desea mantener
         //en la siguiente alta
         var inventarioNavigation = InventarioNavigation(inventarioPosteado);
@@ -151,7 +185,43 @@ public partial class ManageInventariosPage : ContentPage
         await Shell.Current.GoToAsync(nameof(InventariosPage));
     }
 
+    async void OnBajaButtonClicked(object sender, EventArgs e)
+    {
+        var inventarioIntactoNavigation = await _dataService.GetInventarioAsync(Inventario.Id);
+        //crea un bien nuevo a partir de bienPosteado con la información que se desea mantener
+        //en la siguiente alta
 
+        var navegationParameter = new Dictionary<string, object>
+        {
+            {nameof(AjusteBajaVM), inventarioIntactoNavigation }
+        };
+        await Shell.Current.GoToAsync(nameof(ManageAjusteBajaPage), navegationParameter);
+    }
+
+
+
+    async void AjusteCantidad(int cantidadNueva, int cantidadOriginal, string justificacion) {
+        
+            var diferenciaCantidad = Math.Abs(cantidadNueva - cantidadOriginal);
+            var ajuste = new Ajuste();
+            var ajusteDetalle = new AjusteDetalle();
+            if (cantidadNueva > cantidadOriginal)
+            {
+                ajuste.AjusteTipoId = 24;
+            }
+            if (cantidadNueva < cantidadOriginal)
+            {
+                ajuste.AjusteTipoId = 26;
+            }
+            ajuste.Justificacion = justificacion;
+            var ajusteCreado = await _dataService.AddAjusteAsync(ajuste);
+            ajusteDetalle.AjusteId = ajusteCreado.Id;
+            ajusteDetalle.CantidadAfectada = diferenciaCantidad;
+            ajusteDetalle.InventarioId = _inventario.Id;
+            await _dataService.AddAjusteDetalleAsync(ajusteDetalle);
+       
+       
+    }
     public Inventario InventarioNavigation(Inventario inventarioPosteado)
     {
         var inventarioNavigation = new Inventario();
@@ -187,6 +257,7 @@ public partial class ManageInventariosPage : ContentPage
         }
         return inventarioNavigation;
     }
+
 
     bool IsNew(Inventario inventario)
     {

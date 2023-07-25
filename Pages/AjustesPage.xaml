@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoMauiClient2.Pages.InventariosPage"
-             Title="Bienes">
+                x:Class="ToDoMauiClient2.Pages.AjustesPage"
+             Title="Ajustes">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Menú Principal" Clicked="OnMenuPrincipalClicked"/>
-        <ToolbarItem Text="Nuevo Inventario" Clicked="OnAddInventarioClicked"/>
-        <ToolbarItem Text="Nueva Alta" Clicked="OnAddAltaClicked"/>
 
 
     </ContentPage.ToolbarItems>
     <CollectionView x:Name="collectionView"
                     SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged"
                     Margin="30,10,30,0">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
@@ -24,14 +21,14 @@
                     <Label.Text>
                         <MultiBinding StringFormat="{}||{0}||{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}||">
                             <Binding Path="Id" />
-                            <Binding Path="Cantidad" />
-                            <Binding Path="BienPatrimonialString" />
-                            <Binding Path="AnexoTipoString" />
-                            <Binding Path="EstadoCondicionString" />
-                            <Binding Path="EstadoBienString" />
-                            <Binding Path="AreaString" />
-                            <Binding Path="Observacion" />
-                            <Binding Path="ProcedimientoString" />
+                            <Binding Path="AjusteString" />
+                            <Binding Path="AjusteTipoString" />
+                            <Binding Path="InventarioString" />
+                            <Binding Path="CantidadAfectada" />
+                            <Binding Path="AreaOrigenString" />
+                            <Binding Path="AreaOrigenId" />
+                            <Binding Path="AreaDestinoId" />
+                            <Binding Path="AreaDestinoString" />
                         </MultiBinding>
                     </Label.Text>
                 </Label>

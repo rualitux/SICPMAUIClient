@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+
+             x:Class="ToDoMauiClient2.Pages.ManageAjusteBajaPage"
+             Title="Baja de Inventario"
+             >
+
+
+
+    <Grid RowDefinitions="50,150,50,150,150,50,*,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="0" RowSpacing="0">
+
+        <Label Text="Stock actual:" FontSize="18" Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+        <Label Text="{Binding Path= AjusteBajaVM.Cantidad}" Grid.Row="0" Grid.Column="1" BackgroundColor="Tomato"></Label>
+
+        <TableView Intent="Data" Grid.Row="1" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Procedimiento:">
+                    <EntryCell Text="{Binding Path= AjusteBajaVM.NombreReferencial}" Placeholder="Nombre Referencial" />
+                    <EntryCell Text="{Binding Path= AjusteBajaVM.NumeroDocumento}" Placeholder="Resolución N°"/>
+                    <EntryCell Text="{Binding Path= AjusteBajaVM.NumeroGuia}" Placeholder="Guía de Remisión N°"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <TableView Intent="Data" Grid.Row="4" Grid.ColumnSpan="3">
+            <TableRoot>
+                <TableSection Title="Ajuste:">
+                    <EntryCell Text="{Binding Path= AjusteBajaVM.Justificacion}" Placeholder="Justificacion" />
+                    <EntryCell Text="{Binding Path= AjusteBajaVM.CantidadAfectada}" Placeholder="Cantidad a dar de baja" />
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Label Text="Selecciona Causal::" FontSize="18" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+       
+        <Label Text="Selecciona Fecha::" FontSize="18" Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2"></Label>
+      
+
+
+
+        <Picker
+                        Grid.Row="2"
+                        Grid.Column="2"
+             Grid.ColumnSpan="2"
+
+        x:Name="causalPicker"         
+        Title="Causales" 
+                        TitleColor="Black"
+                       
+        FontSize="18"
+
+        ItemsSource="{Binding picker.ItemSource}"
+        ItemDisplayBinding="{Binding Valor}"
+        SelectedItem="{Binding Id}"
+        SelectedIndex="{Binding Id}"
+        />
+
+
+
+
+
+        <DatePicker           
+            x:Name="fechaDocumentoPicker"  
+            Grid.Row="3"
+            Format="d"
+            Grid.Column="2"
+            MinimumDate="01/01/2000"  
+             />
+  
+
+
+        <Button Text="Guardar" Grid.Row="7" Grid.Column="0" Clicked="OnSaveButtonClicked" />
+        <Button Text="Cancelar" Grid.Row="7" Grid.Column="2" Clicked="ONCancelButtonClicked" />
+    </Grid>
+
+
+
+</ContentPage>

@@ -1,4 +1,5 @@
-﻿using ToDoMauiClient2.DataServices;
+﻿using CommunityToolkit.Maui;
+using ToDoMauiClient2.DataServices;
 using ToDoMauiClient2.Pages;
 
 namespace ToDoMauiClient2;
@@ -10,6 +11,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,11 +24,14 @@ public static class MauiProgram
         builder.Services.AddSingleton<AreasPage>();
         builder.Services.AddSingleton<BienesPage>();
         builder.Services.AddSingleton<InventariosPage>();
+        builder.Services.AddSingleton<AjustesPage>();
         builder.Services.AddTransient<ManageToDoPage>();
         builder.Services.AddTransient<ManageAreasPage>();
         builder.Services.AddTransient<ManageBienesPage>();
         builder.Services.AddTransient<ManageBienProcedimientoAltasPage>();
         builder.Services.AddTransient<ManageInventariosPage>();
+        builder.Services.AddTransient<ManageAjusteBajaPage>();
+
 
 
 
